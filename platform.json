@@ -73,6 +73,12 @@
       "owner": "maxgerhardt",
       "version": "https://github.com/maxgerhardt/pio-bl-iot-sdk-arduino.git"
     },
+    "tool-bl60x-flash": {
+      "optional": true,
+      "type": "uploader",
+      "owner": "maxgerhardt",
+      "version": "~1.1000.0"
+    },
     "tool-openocd-riscv": {
       "optional": true,
       "type": "uploader",

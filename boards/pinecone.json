@@ -27,9 +27,9 @@
   "upload": {
     "maximum_ram_size": 327680,
     "maximum_size": 1310720,
-    "protocol": "bl602-flasher",
+    "protocol": "bl60x-flash",
     "protocols": [
-      "bl602-flasher",
+      "bl60x-flash",
       "ftdi",
       "jlink",
       "minimodule",
