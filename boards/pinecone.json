@@ -11,6 +11,7 @@
     "march": "rv32imfc",
     "mcmodel": "medlow",
     "mcu": "sivife_e24",
+    "core": "bouffalo",
     "variant": "pinecone"
   },
   "debug": {
