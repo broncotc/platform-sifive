@@ -12,7 +12,8 @@
     "mcmodel": "medlow",
     "mcu": "sivife_e24",
     "core": "bouffalo",
-    "variant": "pinecone"
+    "variant": "pinecone",
+    "ldscript": "flash.ld"
   },
   "debug": {
     "jlink_device": "E24",
