@@ -20,6 +20,23 @@ from os.path import isdir, join
 from SCons.Script import (ARGUMENTS, COMMAND_LINE_TARGETS, AlwaysBuild,
                           Builder, Default, DefaultEnvironment)
 
+def BeforeUpload(target, source, env):  # pylint: disable=W0613,W0621
+    env.AutodetectUploadPort()
+
+    upload_options = {}
+    if "BOARD" in env:
+        upload_options = env.BoardConfig().get("upload", {})
+
+    if not bool(upload_options.get("disable_flushing", False)):
+        env.FlushSerialBuffer("$UPLOAD_PORT")
+
+    before_ports = get_serial_ports()
+
+    if bool(upload_options.get("use_1200bps_touch", False)):
+        env.TouchSerialPort("$UPLOAD_PORT", 1200)
+
+    if bool(upload_options.get("wait_for_upload_port", False)):
+        env.Replace(UPLOAD_PORT=env.WaitForNewSerialPort(before_ports))
 
 env = DefaultEnvironment()
 env.SConscript("compat.py", exports="env")
@@ -58,6 +75,17 @@ env.Append(
                 "$TARGET"
             ]), "Building $TARGET"),
             suffix=".hex"
+        ),
+        ElfToBin=Builder(
+            action=env.VerboseAction(" ".join([
+                "$OBJCOPY",
+                "-S",
+                "-O",
+                "binary",
+                "$SOURCES",
+                "$TARGET"
+            ]), "Building $TARGET"),
+            suffix=".bin"
         )
     )
 )
@@ -85,6 +113,7 @@ if "nobuild" in COMMAND_LINE_TARGETS:
 else:
     target_elf = env.BuildProgram()
     target_hex = env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf)
+    target_bin = env.ElfToBin(join("$BUILD_DIR", "${PROGNAME}"), target_elf)
     env.Depends(target_hex, "checkprogsize")
 
 AlwaysBuild(env.Alias("nobuild", target_hex))
@@ -173,7 +202,19 @@ elif upload_protocol in debug_tools:
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS"
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
-
+elif upload_protocol == "bl60x-flash":
+    env.Replace(
+        UPLOADER= '"%s"' % join(platform.get_package_dir("tool-bl60x-flash") or "", "bl602-flasher"),
+        UPLOADERFLAGS=[
+            # no flags needed 
+        ],
+        UPLOADCMD='$UPLOADER $UPLOADERFLAGS "$UPLOAD_PORT" "$SOURCE"'
+    )
+    upload_actions = [
+        env.VerboseAction(env.AutodetectUploadPort, "Looking for upload port..."),
+        env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
+    ]
+    upload_target = target_bin
 # custom upload tool
 elif upload_protocol == "custom":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
