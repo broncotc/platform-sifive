@@ -77,7 +77,7 @@
       "optional": true,
       "type": "uploader",
       "owner": "maxgerhardt",
-      "version": "~1.1000.0"
+      "version": "https://github.com/maxgerhardt/pio-bl60x-flash.git"
     },
     "tool-openocd-riscv": {
       "optional": true,

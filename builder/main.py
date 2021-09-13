@@ -16,11 +16,15 @@ import sys
 from platform import system
 from os import makedirs
 from os.path import isdir, join
+import semantic_version
+import subprocess
+import json
 
 from SCons.Script import (ARGUMENTS, COMMAND_LINE_TARGETS, AlwaysBuild,
                           Builder, Default, DefaultEnvironment)
 
 from platformio.util import get_serial_ports
+from platformio.package.version import get_original_version, pepver_to_semver
 
 def BeforeUpload(target, source, env):  # pylint: disable=W0613,W0621
     env.AutodetectUploadPort()
@@ -39,6 +43,48 @@ def BeforeUpload(target, source, env):  # pylint: disable=W0613,W0621
 
     if bool(upload_options.get("wait_for_upload_port", False)):
         env.Replace(UPLOAD_PORT=env.WaitForNewSerialPort(before_ports))
+
+def install_python_deps():
+    def _get_installed_pip_packages():
+        result = {}
+        packages = {}
+        pip_output = subprocess.check_output(
+            [env.subst("$PYTHONEXE"), "-m", "pip", "list", "--format=json"]
+        )
+        try:
+            packages = json.loads(pip_output)
+        except:
+            print("Warning! Couldn't extract the list of installed Python packages.")
+            return {}
+        for p in packages:
+            result[p["name"]] = pepver_to_semver(p["version"])
+
+        return result
+
+    deps = {
+        "tqdm": ">=4.62.2",
+    }
+
+    installed_packages = _get_installed_pip_packages()
+    packages_to_install = []
+    for package, spec in deps.items():
+        if package not in installed_packages:
+            packages_to_install.append(package)
+        else:
+            version_spec = semantic_version.Spec(spec)
+            if not version_spec.match(installed_packages[package]):
+                packages_to_install.append(package)
+
+    if packages_to_install:
+        env.Execute(
+            env.VerboseAction(
+                (
+                    '"$PYTHONEXE" -m pip install -U --force-reinstall '
+                    + " ".join(['"%s%s"' % (p, deps[p]) for p in packages_to_install])
+                ),
+                "Installing BL60X-Flash's Python dependencies",
+            )
+        )
 
 env = DefaultEnvironment()
 env.SConscript("compat.py", exports="env")
@@ -205,12 +251,14 @@ elif upload_protocol in debug_tools:
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 elif upload_protocol == "bl60x-flash":
+    # make sure tqdm is installed for python flasher script
+    install_python_deps()
     env.Replace(
-        UPLOADER= '"%s"' % join(platform.get_package_dir("tool-bl60x-flash") or "", "bl602-flasher"),
+        UPLOADER= '"%s"' % join(platform.get_package_dir("tool-bl60x-flash") or "", "bl602-flasher.py"),
         UPLOADERFLAGS=[
             # no flags needed 
         ],
-        UPLOADCMD='$UPLOADER $UPLOADERFLAGS "$UPLOAD_PORT" "$SOURCE"'
+        UPLOADCMD='"$PYTHONEXE" $UPLOADER $UPLOADERFLAGS "$UPLOAD_PORT" "$SOURCE"'
     )
     upload_actions = [
         env.VerboseAction(env.AutodetectUploadPort, "Looking for upload port..."),
