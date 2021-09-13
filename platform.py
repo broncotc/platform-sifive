@@ -29,6 +29,8 @@ class SifivePlatform(PlatformBase):
                     self.packages[p]["optional"] = False
             if "windows" not in get_systype():
                 self.packages["tool-gperf"]["optional"] = False
+        if "arduino" in variables.get("pioframework", []):
+            self.packages["framework-bl-iot-sdk-arduino"]["optional"] = False               
 
         upload_protocol = variables.get(
             "upload_protocol",
