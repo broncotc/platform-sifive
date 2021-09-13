@@ -1,0 +1,45 @@
+{
+  "build": {
+    "f_cpu": "192000000L",
+    "hwids": [
+      [
+        "0x002a",
+        "0x15ba"
+      ]
+    ],
+    "mabi": "ilp32f",
+    "march": "rv32imfc",
+    "mcmodel": "medlow",
+    "mcu": "sivife_e24",
+    "variant": "pinecone"
+  },
+  "debug": {
+    "jlink_device": "E24",
+    "svd_path": "E24.svd",
+    "qemu_machine": "sifive_e"
+  },
+  "frameworks": [
+    "arduino"
+  ],
+  "name": "PineCone (BL602)",
+  "upload": {
+    "maximum_ram_size": 327680,
+    "maximum_size": 1310720,
+    "protocol": "bl602-flasher",
+    "protocols": [
+      "bl602-flasher",
+      "ftdi",
+      "jlink",
+      "minimodule",
+      "olimex-arm-usb-tiny-h",
+      "olimex-arm-usb-ocd-h",
+      "olimex-arm-usb-ocd",
+      "olimex-jtag-tiny",
+      "tumpa"
+    ],
+    "speed": 2000000,
+    "require_upload_port": true    
+  },
+  "url": "https://wiki.pine64.org/wiki/PineCone",
+  "vendor": "Pine64"
+}
