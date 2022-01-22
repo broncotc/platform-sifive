@@ -73,6 +73,12 @@
       "owner": "maxgerhardt",
       "version": "https://github.com/maxgerhardt/pio-bl-iot-sdk-arduino.git"
     },
+    "framework-bouffalo-sdk": {
+      "type": "framework",
+      "optional": true,
+      "owner": "jsaiko",
+      "version": "https://github.com/jsaiko/framework-bouffalo-sdk.git"
+    },
     "tool-bl60x-flash": {
       "optional": true,
       "type": "uploader",
