@@ -41,6 +41,13 @@
       "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
       "homepage": "https://github.com/pine64/ArduinoCore-bouffalo",
       "title": "Arduino"
+    },
+    "bouffalo": {
+      "package": "framework-bouffalo-sdk",
+      "script": "builder/frameworks/bouffalo.py",
+      "description": "Bouffalolab bl_iot_sdk. Support BL602 Wi-Fi/BLE Combo RISC-V based Chip and BL70X Zigbee/BLE RISC-V based Chip.",
+      "homepage": "https://pine64.github.io/bl602-docs",
+      "title": "Bouffalo SDK"
     }
   },
   "packages": {
