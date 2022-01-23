@@ -83,8 +83,8 @@
     "framework-bouffalo-sdk": {
       "type": "framework",
       "optional": true,
-      "owner": "jsaiko",
-      "version": "https://github.com/jsaiko/framework-bouffalo-sdk.git"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/framework-bouffalo-sdk.git"
     },
     "tool-bl60x-flash": {
       "optional": true,
