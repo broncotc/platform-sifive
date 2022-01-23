@@ -41,6 +41,13 @@
       "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
       "homepage": "https://github.com/pine64/ArduinoCore-bouffalo",
       "title": "Arduino"
+    },
+    "bouffalo": {
+      "package": "framework-bouffalo-sdk",
+      "script": "builder/frameworks/bouffalo.py",
+      "description": "Bouffalolab bl_iot_sdk. Support BL602 Wi-Fi/BLE Combo RISC-V based Chip and BL70X Zigbee/BLE RISC-V based Chip.",
+      "homepage": "https://pine64.github.io/bl602-docs",
+      "title": "Bouffalo SDK"
     }
   },
   "packages": {
@@ -64,20 +71,26 @@
     "framework-arduinobouffalo": {
       "type": "framework",
       "optional": true,
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/ArduinoCore-bouffalo"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/ArduinoCore-bouffalo"
     },
     "framework-bl-iot-sdk-arduino": {
       "type": "framework",
       "optional": true,
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/pio-bl-iot-sdk-arduino.git"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/pio-bl-iot-sdk-arduino.git"
+    },
+    "framework-bouffalo-sdk": {
+      "type": "framework",
+      "optional": true,
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/framework-bouffalo-sdk.git"
     },
     "tool-bl60x-flash": {
       "optional": true,
       "type": "uploader",
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/pio-bl60x-flash.git"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/pio-bl60x-flash.git"
     },
     "tool-openocd-riscv": {
       "optional": true,

@@ -21,7 +21,8 @@
     "qemu_machine": "sifive_e"
   },
   "frameworks": [
-    "arduino"
+    "arduino",
+    "bouffalo"
   ],
   "name": "PineCone (BL602)",
   "upload": {
