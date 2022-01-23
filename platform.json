@@ -71,14 +71,14 @@
     "framework-arduinobouffalo": {
       "type": "framework",
       "optional": true,
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/ArduinoCore-bouffalo"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/ArduinoCore-bouffalo"
     },
     "framework-bl-iot-sdk-arduino": {
       "type": "framework",
       "optional": true,
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/pio-bl-iot-sdk-arduino.git"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/pio-bl-iot-sdk-arduino.git"
     },
     "framework-bouffalo-sdk": {
       "type": "framework",
@@ -89,8 +89,8 @@
     "tool-bl60x-flash": {
       "optional": true,
       "type": "uploader",
-      "owner": "maxgerhardt",
-      "version": "https://github.com/maxgerhardt/pio-bl60x-flash.git"
+      "owner": "Community-BL-IOT",
+      "version": "https://github.com/Community-BL-IOT/pio-bl60x-flash.git"
     },
     "tool-openocd-riscv": {
       "optional": true,
